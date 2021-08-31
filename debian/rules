@@ -1,0 +1,14 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+BASEDIR=debian/gnome-shell-extension-vertical-overview/usr/share/gnome-shell/extensions/vertical-overview@RensAlthuis.github.com
+
+%:
+	dh $@
+
+override_dh_install:
+	dh_install
+	rm -rf $(BASEDIR)/schemas

@@ -1,0 +1,13 @@
+Source: gnome-shell-extension-vertical-overview
+Section: gnome
+Priority: optional
+Maintainer: Jeremy Soller <jeremy@system76.com>
+Build-Depends: debhelper (>= 10), libglib2.0-bin
+Standards-Version: 3.9.8
+Homepage: https://github.com/pop-os/gnome-shell-extension-vertical-overview
+Vcs-Git: https://github.com/pop-os/gnome-shell-extension-vertical-overview.git
+
+Package: gnome-shell-extension-vertical-overview
+Architecture: all
+Depends: gnome-shell (>= 40), ${misc:Depends}
+Description: Gnome-shell extension to switch to vertical workspace orientation

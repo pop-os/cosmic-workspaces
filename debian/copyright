@@ -1,0 +1,7 @@
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: gnome-shell-extension-vertical-overview
+Source: https://github.com/pop-os/gnome-shell-extension-vertical-overview
+
+Files: *
+Copyright: 2021 System76
+License: GPLv3
