@@ -29,10 +29,6 @@ function staticBackgroundOverride() {
                 container: Main.layoutManager.overviewGroup,
             });
 
-            bgManager._fadeSignal = Main.overview._overview._controls._stateAdjustment.connect('notify::value', (v) => {
-                bgManager.backgroundActor.opacity = Util.lerp(255, 100, Math.min(v.value, 1));
-            });
-
             global.vertical_overview.bgManagers.push(bgManager);
         }
         staticBackgroundEnabled = true;
@@ -42,7 +38,6 @@ function staticBackgroundOverride() {
 function staticBackgroundReset() {
     if (staticBackgroundEnabled) {
         for (var bg of global.vertical_overview.bgManagers) {
-            Main.overview._overview._controls._stateAdjustment.disconnect(bg._fadeSignal);
             bg.destroy();
         }
         delete global.vertical_overview.bgManagers;
