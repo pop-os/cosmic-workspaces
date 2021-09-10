@@ -82,7 +82,7 @@
             <description></description>
         </key>
         <key type="b" name="panel-in-overview">
-            <default>false</default>
+            <default>true</default>
             <summary>Disable top bar turning transparent in overview</summary>
             <description></description>
         </key>
