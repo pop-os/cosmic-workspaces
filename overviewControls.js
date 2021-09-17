@@ -257,7 +257,7 @@ var ControlsManagerOverride = {
         const { searchActive } = this._searchController;
         const [opacity, scale] = this._getThumbnailsBoxParams();
 
-        const thumbnailsBoxVisible = shouldShow && !searchActive && opacity !== 0;
+        const thumbnailsBoxVisible = shouldShow && !searchActive && opacity !== 0 && !Main.overview.dash.showAppsButton.checked;
         if (thumbnailsBoxVisible) {
             this._thumbnailsBox.opacity = 0;
             this._thumbnailsBox.visible = thumbnailsBoxVisible;
