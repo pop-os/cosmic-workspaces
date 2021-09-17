@@ -346,7 +346,7 @@ function _updateWorkspacesDisplay() {
         duration: 0,
         mode: Clutter.AnimationMode.EASE_OUT_QUAD,
         onComplete: () => {
-            this._workspacesDisplay.visible = !(progress == 1 && finalState == ControlsState.APP_GRID);
+            // this._workspacesDisplay.visible = !(progress == 1 && finalState == ControlsState.APP_GRID);
             this._workspacesDisplay.reactive = workspacesDisplayVisible;
             this._workspacesDisplay.setPrimaryWorkspaceVisible(workspacesDisplayVisible);
         }
