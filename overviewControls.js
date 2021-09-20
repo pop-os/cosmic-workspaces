@@ -166,8 +166,14 @@ var ControlsManagerLayoutOverride = {
 
         // Workspace Thumbnails
         if (this._workspacesThumbnails.visible) {
-            childBox.set_origin(width - rightOffset, startY);
-            childBox.set_size(rightOffset, height);
+            if (global.vertical_overview.workspace_picker_left) {
+                childBox.set_origin(0, startY);
+                childBox.set_size(leftOffset, height);
+            } else {
+                childBox.set_origin(width - rightOffset, startY);
+                childBox.set_size(rightOffset, height);
+            }
+
             this._workspacesThumbnails.allocate(childBox);
         }
 

@@ -86,5 +86,8 @@
             <summary>Disable top bar turning transparent in overview</summary>
             <description></description>
         </key>
+        <key type="b" name="workspace-picker-left">
+            <default>true</default>
+        </key>
     </schema>
 </schemalist>

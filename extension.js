@@ -112,6 +112,10 @@ function bindSettings() {
     Util.bindSetting('panel-in-overview', (settings, label) => {
         Util.toggleCSS(Main.panel, "vertical-overview", settings.get_boolean(label) ? "on" : "off");
     });
+
+    Util.bindSetting('workspace-picker-left', (settings, label) => {
+        global.vertical_overview.workspace_picker_left = settings.get_boolean(label);
+    });
 }
 
 function rebind_keys(self) {

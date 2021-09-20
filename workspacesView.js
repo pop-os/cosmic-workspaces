@@ -130,8 +130,15 @@ var SecondaryMonitorDisplayOverride = {
         // Workspace Thumbnails
         if (this._thumbnails.visible) {
             const childBox = new Clutter.ActorBox();
-            childBox.set_origin(width - rightOffset, 0);
-            childBox.set_size(rightOffset, height);
+
+            if (global.vertical_overview.workspace_picker_left) {
+                childBox.set_origin(0, startY);
+                childBox.set_size(leftOffset, height);
+            } else {
+                childBox.set_origin(width - rightOffset, startY);
+                childBox.set_size(rightOffset, height);
+            }
+
             this._thumbnails.allocate(childBox);
         }
 
