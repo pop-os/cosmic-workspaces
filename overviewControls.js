@@ -5,6 +5,7 @@ const { Clutter, Gio, GObject, Meta, Shell, St } = imports.gi;
 
 const AppDisplay = imports.ui.appDisplay;
 const Dash = imports.ui.dash;
+const { ExtensionState } = imports.misc.extensionUtils;
 const Layout = imports.ui.layout;
 const Main = imports.ui.main;
 const Overview = imports.ui.overview;
@@ -163,16 +164,35 @@ var ControlsManagerLayoutOverride = {
 
         }
 
-
         // Workspace Thumbnails
         if (this._workspacesThumbnails.visible) {
+            let origin, size;
             if (global.vertical_overview.workspace_picker_left) {
-                childBox.set_origin(0, startY);
-                childBox.set_size(leftOffset, height);
+                origin = [0, startY];
+                size = [leftOffset, height];
             } else {
-                childBox.set_origin(width - rightOffset, startY);
-                childBox.set_size(rightOffset, height);
+                origin = [width - rightOffset, startY];
+                size = [rightOffset, height];
             }
+
+            const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
+            if (cosmicDock && cosmicDock.state === ExtensionState.ENABLED) {
+                const mainDock = cosmicDock.stateObj.dockManager.mainDock;
+
+                const [, dashHeight] = mainDock.get_preferred_height(width);
+                const [, dashWidth] = mainDock.get_preferred_width(height);
+
+                if (mainDock.position == St.Side.BOTTOM) {
+                    size[1] -= dashHeight;
+                } else if (mainDock.position == St.Side.LEFT && global.vertical_overview.workspace_picker_left) {
+                    origin[0] += dashWidth;
+                } else if (mainDock.position == St.Side.RIGHT && !global.vertical_overview.workspace_picker_left) {
+                    origin[0] -= dashWidth;
+                }
+            }
+
+            childBox.set_origin(...origin);
+            childBox.set_size(...size);
 
             this._workspacesThumbnails.allocate(childBox);
         }

@@ -6,6 +6,7 @@ const WORKSPACE_INACTIVE_SCALE = 0.94;
 const SECONDARY_WORKSPACE_SCALE = 0.70;
 
 
+const { ExtensionState } = imports.misc.extensionUtils;
 const OverviewControls = imports.ui.overviewControls;
 const WorkspacesView = imports.ui.workspacesView;
 const Main = imports.ui.main;
@@ -130,14 +131,33 @@ var SecondaryMonitorDisplayOverride = {
         // Workspace Thumbnails
         if (this._thumbnails.visible) {
             const childBox = new Clutter.ActorBox();
-
+            let origin, size;
             if (global.vertical_overview.workspace_picker_left) {
-                childBox.set_origin(0, 0);
-                childBox.set_size(leftOffset, height);
+                origin = [0, 0];
+                size = [leftOffset, height];
             } else {
-                childBox.set_origin(width - rightOffset, 0);
-                childBox.set_size(rightOffset, height);
+                origin = [width - rightOffset, 0];
+                size = [rightOffset, height];
             }
+
+            const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
+            if (cosmicDock && cosmicDock.state === ExtensionState.ENABLED) {
+                const mainDock = cosmicDock.stateObj.dockManager.mainDock;
+
+                const [, dashHeight] = mainDock.get_preferred_height(width);
+                const [, dashWidth] = mainDock.get_preferred_width(height);
+
+                if (mainDock.position == St.Side.BOTTOM) {
+                    size[1] -= dashHeight;
+                } else if (mainDock.position == St.Side.LEFT && global.vertical_overview.workspace_picker_left) {
+                    origin[0] += dashWidth;
+                } else if (mainDock.position == St.Side.RIGHT && !global.vertical_overview.workspace_picker_left) {
+                    origin[0] -= dashWidth;
+                }
+            }
+
+            childBox.set_origin(...origin);
+            childBox.set_size(...size);
 
             this._thumbnails.allocate(childBox);
         }
