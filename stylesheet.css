@@ -102,5 +102,8 @@
 }
 
 .workspace-thumbnails {
-	background-color: rgba(32, 32, 32, 0.76); border-radius: 10px; margin: 4px; spacing: 6px;
+	background-color: rgba(32, 32, 32, 0.76);
+	border-radius: 10px;
+	margin: 4px;
+	spacing: 6px;
 }
