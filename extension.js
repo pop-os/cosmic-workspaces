@@ -119,15 +119,8 @@ function bindSettings() {
 }
 
 function rebind_keys(self) {
-    Main.wm.removeKeybinding('toggle-application-view');
     Main.wm.removeKeybinding('shift-overview-up');
     Main.wm.removeKeybinding('shift-overview-down');
-    Main.wm.addKeybinding(
-        'toggle-application-view',
-        new Gio.Settings({ schema_id: WindowManager.SHELL_KEYBINDINGS_SCHEMA }),
-        Meta.KeyBindingFlags.IGNORE_AUTOREPEAT,
-        Shell.ActionMode.NORMAL | Shell.ActionMode.OVERVIEW,
-        self._toggleAppsPage.bind(self));
 
     Main.wm.addKeybinding('shift-overview-up',
         new Gio.Settings({ schema_id: WindowManager.SHELL_KEYBINDINGS_SCHEMA }),
