@@ -23,6 +23,17 @@ function enable() {
     global.vertical_overview.GSFunctions = {};
     bindSettings();
 
+    const settings_schema = Gio.SettingsSchemaSource.get_default().lookup('org.gnome.shell.extensions.pop-cosmic', true);
+    global.vertical_overview.workspace_picker_left = true;
+    if (settings_schema !== null) {
+        const settings = new Gio.Settings({ settings_schema: settings_schema });
+        global.vertical_overview.cosmic_settings = settings;
+        settings.connect('changed::workspace-picker-left', (settings, label) => {
+            global.vertical_overview.workspace_picker_left = settings.get_boolean(label);
+	});
+        global.vertical_overview.workspace_picker_left = settings.get_boolean('workspace-picker-left');
+    }
+
     OverviewControlsOverride.override();
     WorkspacesViewOverrides.override();
     WorkspaceThumbnailOverrides.override();
@@ -53,6 +64,8 @@ function disable() {
     rebind_keys(Main.overview._overview._controls);
 
     global.workspaceManager.override_workspace_layout(Meta.DisplayCorner.TOPLEFT, false, 1, -1);
+
+    delete global.vertical_overview.cosmic_settings;
 
     for (var key in global.vertical_overview.settings.signals) {
         Util.unbindSetting(key);
@@ -111,10 +124,6 @@ function bindSettings() {
 
     Util.bindSetting('panel-in-overview', (settings, label) => {
         Util.toggleCSS(Main.panel, "vertical-overview", settings.get_boolean(label) ? "on" : "off");
-    });
-
-    Util.bindSetting('workspace-picker-left', (settings, label) => {
-        global.vertical_overview.workspace_picker_left = settings.get_boolean(label);
     });
 }
 
