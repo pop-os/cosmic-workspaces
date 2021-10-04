@@ -19,24 +19,40 @@ const Self = imports.misc.extensionUtils.getCurrentExtension();
 const _Util = Self.imports.util;
 const animateAllocation = imports.ui.workspace.animateAllocation;
 
+function updateStaticBackgrounds() {
+    for (var bg of global.vertical_overview.bgManagers) {
+        bg.destroy();
+    }
+
+    for (var monitor of Main.layoutManager.monitors) {
+        let bgManager = new Background.BackgroundManager({
+            monitorIndex: monitor.index,
+            container: Main.layoutManager.overviewGroup,
+        });
+
+        global.vertical_overview.bgManagers.push(bgManager);
+    }
+}
+
 var staticBackgroundEnabled = false;
+var monitorsChangedId = null;
 function staticBackgroundOverride() {
     if (!staticBackgroundEnabled) {
         global.vertical_overview.bgManagers = [];
-        for (var monitor of Main.layoutManager.monitors) {
-            let bgManager = new Background.BackgroundManager({
-                monitorIndex: monitor.index,
-                container: Main.layoutManager.overviewGroup,
-            });
+        monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
+            updateStaticBackgrounds();
+        });
+        updateStaticBackgrounds();
 
-            global.vertical_overview.bgManagers.push(bgManager);
-        }
         staticBackgroundEnabled = true;
     }
 }
 
 function staticBackgroundReset() {
     if (staticBackgroundEnabled) {
+        Main.layoutManager.disconnect(monitorsChangedId);
+        monitorsChangedId = null;
+
         for (var bg of global.vertical_overview.bgManagers) {
             bg.destroy();
         }
