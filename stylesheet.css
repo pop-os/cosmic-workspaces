@@ -80,13 +80,13 @@
 
 /* Top bar */
 #panel.vertical-overview {
-	background-color: #000;
+	background-color: #211F1F;
 }
 
 #panel.vertical-overview .panel-corner {
-	-panel-corner-radius: 9px;
-	-panel-corner-background-color: #000;
-	-panel-corner-border-width: 2px;
+	-panel-corner-radius: 4px;
+	-panel-corner-background-color: #211F1F;
+	-panel-corner-border-width: 0px;
 	-panel-corner-border-color: transparent;
 	-panel-corner-opacity: 1;
 }
@@ -94,9 +94,9 @@
 /* 3.38 style workspace thumbnails */
 .vertical-overview.workspace-thumbnails {
 	color: #eeeeee;
-	background-color: rgba(32, 32, 32, 0.76);
+	background-color: rgba(32, 32, 32, 0.65);
 	padding: 30px;
-	border-radius: 15px;
+	border-radius: 30px;
 	margin: 4px;
 	margin-top: -300px;
 	spacing: 30px;
@@ -104,10 +104,19 @@
 
 .workspace-thumbnails {
 	color: #eeeeee;
-	background-color: rgba(32, 32, 32, 0.76);
+	background-color: rgba(32, 32, 32, 0.65);
 	padding: 15px;
-	border-radius: 15px;
+	border-radius: 30px;
 	margin: 4px;
 	margin-top: -300px;
 	spacing: 30px;
+}
+
+.workspace-thumbnail-indicator {
+	border: 6px solid #FBB86C;
+	border-radius: 18px;
+}
+
+.workspace-thumbnail {
+	border-radius: 12px;
 }
