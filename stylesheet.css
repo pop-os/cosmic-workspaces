@@ -92,31 +92,21 @@
 }
 
 /* 3.38 style workspace thumbnails */
-.vertical-overview.workspace-thumbnails {
-	color: #eeeeee;
-	background-color: rgba(32, 32, 32, 0.65);
-	padding: 30px;
-	border-radius: 30px;
-	margin: 4px;
-	margin-top: -300px;
-	spacing: 30px;
-}
-
+.vertical-overview.workspace-thumbnails,
 .workspace-thumbnails {
 	color: #eeeeee;
 	background-color: rgba(32, 32, 32, 0.65);
-	padding: 15px;
-	border-radius: 30px;
+	padding: 24px;
+	border-radius: 24px;
 	margin: 4px;
-	margin-top: -300px;
-	spacing: 30px;
+	spacing: 24px;
 }
 
 .workspace-thumbnail-indicator {
-	border: 6px solid #FBB86C;
-	border-radius: 18px;
+	border: 4px solid #FBB86C;
+	border-radius: 8px;
 }
 
 .workspace-thumbnail {
-	border-radius: 12px;
+	border-radius: 8px;
 }
