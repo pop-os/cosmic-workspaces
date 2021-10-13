@@ -190,7 +190,7 @@ var ThumbnailsBoxOverride = {
 
         let thumbnails_position = 12;
         let totalHeight = (height + spacing) * this._thumbnails.length;
-        box.y1 = Math.max(0, (box.get_height() - totalHeight) / (100 / thumbnails_position));
+        box.y1 = themeNode.get_padding(St.Side.TOP);
 
         let additionalScale = (box.get_height() < totalHeight) ?  box.get_height() / totalHeight : 1;
         height *= additionalScale;
