@@ -188,7 +188,7 @@ var ThumbnailsBoxOverride = {
             });
         }
 
-        let thumbnails_position = 8;
+        let thumbnails_position = 12;
         let totalHeight = (height + spacing) * this._thumbnails.length;
         box.y1 = Math.max(0, (box.get_height() - totalHeight) / (100 / thumbnails_position));
 
