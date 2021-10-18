@@ -1,13 +1,15 @@
-Source: gnome-shell-extension-vertical-overview
+Source: gnome-shell-extension-cosmic-workspaces
 Section: gnome
 Priority: optional
 Maintainer: Jeremy Soller <jeremy@system76.com>
 Build-Depends: debhelper (>= 10), libglib2.0-bin
 Standards-Version: 3.9.8
-Homepage: https://github.com/pop-os/gnome-shell-extension-vertical-overview
-Vcs-Git: https://github.com/pop-os/gnome-shell-extension-vertical-overview.git
+Homepage: https://github.com/pop-os/cosmic-workspaces
+Vcs-Git: https://github.com/pop-os/cosmic-workspaces.git
 
-Package: gnome-shell-extension-vertical-overview
+Package: gnome-shell-extension-cosmic-workspaces
 Architecture: all
 Depends: gnome-shell (>= 40), ${misc:Depends}
+Replaces: gnome-shell-extension-vertical-overview
+Breaks: gnome-shell-extension-vertical-overview
 Description: Gnome-shell extension to switch to vertical workspace orientation

@@ -4,7 +4,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-BASEDIR=debian/gnome-shell-extension-vertical-overview/usr/share/gnome-shell/extensions/vertical-overview@RensAlthuis.github.com
+BASEDIR=debian/gnome-shell-extension-cosmic-workspaces/usr/share/gnome-shell/extensions/cosmic-workspaces@system76.com
 
 %:
 	dh $@

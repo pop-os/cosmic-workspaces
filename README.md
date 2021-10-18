@@ -24,7 +24,7 @@ You can detect your Windowing System in Settings → About.
 Then enable the extension in "Extensions" application or via command:
 
 ```
-gnome-extensions enable vertical-overview@RensAlthuis.github.com
+gnome-extensions enable cosmic-workspaces@system76.com
 ```
 
 ## FAQ
