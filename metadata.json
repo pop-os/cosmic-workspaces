@@ -1,11 +1,11 @@
 {
-    "name" : "Vertical overview",
+    "name" : "Cosmic Workspaces",
     "description" : "Bringing back vertically stacked workspaces",
     "original-author": "rens.althuis@gmail.com",
     "shell-version" : [
         "40"
     ],
     "url" : "",
-    "uuid" : "vertical-overview@RensAlthuis.github.com",
+    "uuid" : "cosmic-workspaces@system76.com",
     "version" : "6"
 }
