@@ -76,7 +76,7 @@ function bindSetting(label, callback, executeOnBind = true) {
     let settings = global.vertical_overview.settings;
     if (!settings) {
         settings = global.vertical_overview.settings = {
-            object: getSettings('org.gnome.shell.extensions.vertical-overview'),
+            object: getSettings('org.gnome.shell.extensions.cosmic-workspaces'),
             signals: {},
             callbacks: {}
         };
