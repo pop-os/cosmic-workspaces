@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-shell-extensions">
-    <schema path="/org/gnome/shell/extensions/vertical-overview/" id="org.gnome.shell.extensions.vertical-overview">
+    <schema path="/org/gnome/shell/extensions/cosmic-workspaces/" id="org.gnome.shell.extensions.cosmic-workspaces">
         <!--The following two keys actually control the sizes of the thumbnails-->
         <key type="i" name="left-offset">
             <default>300</default>
