@@ -11,8 +11,8 @@ You install it through [Gnome Extensions](https://extensions.gnome.org/extension
 
 Or you can install it manually:
 ```
-git clone https://github.com/RensAlthuis/vertical-overview.git
-cd vertical-overview
+git clone https://github.com/pop-os/cosmic-workspaces.git
+cd cosmic-workspaces
 make
 make install
 ```
