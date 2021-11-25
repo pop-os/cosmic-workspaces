@@ -188,7 +188,6 @@ var ThumbnailsBoxOverride = {
             });
         }
 
-        let thumbnails_position = 12;
         let totalHeight = (height + spacing) * this._thumbnails.length;
         box.y1 = themeNode.get_padding(St.Side.TOP);
 
@@ -198,6 +197,15 @@ var ThumbnailsBoxOverride = {
         spacing *= additionalScale;
 
         let childBox = new Clutter.ActorBox();
+        let controlsManager = Main.overview._overview._controls;
+        let [x, y] = Main.layoutManager.panelBox.get_transformed_position();
+        if (x > 0) { // if x > 0 assume panel is on the right side
+            let leftOffset = controlsManager.layoutManager.leftOffset;
+            controlsManager.layoutManager.rightOffset = this._thumbnails.length > 5 ? (leftOffset - (this._thumbnails.length * 12)) : leftOffset;
+        } else {
+            let rightOffset = controlsManager.layoutManager.rightOffset;
+            controlsManager.layoutManager.leftOffset = this._thumbnails.length > 5 ? (rightOffset - (this._thumbnails.length * 12)) : rightOffset;
+        }
         for (let i = 0; i < this._thumbnails.length; i++) {
             let thumbnail = this._thumbnails[i];
 
