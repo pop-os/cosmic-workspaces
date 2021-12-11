@@ -149,14 +149,13 @@ var ThumbnailsBoxOverride = {
         //set top and bottom margin
         box.y1 += 16;
         box.y2 -= 32;
-        this.set_allocation(box);
+        let parentBox = box;
 
         if (this._thumbnails.length == 0) // not visible
             return;
 
         let themeNode = this.get_theme_node();
-        box = themeNode.get_content_box(box);
-
+        box = themeNode.get_content_box(parentBox);
 
         const portholeWidth = this._porthole.width;
         const portholeHeight = this._porthole.height;
@@ -188,14 +187,19 @@ var ThumbnailsBoxOverride = {
             });
         }
 
-        let thumbnails_position = 12;
         let totalHeight = (height + spacing) * this._thumbnails.length;
         box.y1 = themeNode.get_padding(St.Side.TOP);
 
         let additionalScale = (box.get_height() < totalHeight) ?  box.get_height() / totalHeight : 1;
         height *= additionalScale;
         width *= additionalScale;
+        parentBox.set_size(width + spacing*2, parentBox.get_height())
         spacing *= additionalScale;
+        vScale *= additionalScale;
+        hScale *= additionalScale;
+        this.set_allocation(parentBox);
+
+        box.x2 = box.x1 + width;
 
         let childBox = new Clutter.ActorBox();
         for (let i = 0; i < this._thumbnails.length; i++) {
@@ -218,7 +222,7 @@ var ThumbnailsBoxOverride = {
                 y1 += placeholderHeight + spacing;
             }
 
-            childBox.set_origin(box.x1 + (box.get_width() - width), y1);
+            childBox.set_origin(box.x1 + (box.get_width() - width)/2, y1);
             childBox.set_size(width, height);
             thumbnail.setScale(vScale, hScale);
             thumbnail.allocate(childBox);
@@ -239,8 +243,8 @@ var ThumbnailsBoxOverride = {
         let indicatorLeftFullBorder = indicatorThemeNode.get_padding(St.Side.LEFT) + indicatorThemeNode.get_border_width(St.Side.LEFT);
         let indicatorRightFullBorder = indicatorThemeNode.get_padding(St.Side.RIGHT) + indicatorThemeNode.get_border_width(St.Side.RIGHT);
 
-        childBox.x1 = box.x1 + (box.get_width() - width);
-        childBox.x2 = box.x1 + box.get_width();
+        childBox.x1 = box.x1 + (box.get_width() - width)/2;
+        childBox.x2 = box.x1 + (box.get_width() + width)/2;
 
         const indicatorY1 = indicatorLowerY1 +
             (indicatorUpperY1 - indicatorLowerY1) * (indicatorValue % 1);
