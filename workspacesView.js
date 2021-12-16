@@ -124,7 +124,7 @@ var SecondaryMonitorDisplayOverride = {
             Math.round((1 - SECONDARY_WORKSPACE_SCALE) * height / 2);
 
         const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
-        const scale = Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width;
+        const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
         const leftOffset = Main.overview._overview._controls.layoutManager.leftOffset * scale * scaleFactor;
         const rightOffset = Main.overview._overview._controls.layoutManager.rightOffset * scale * scaleFactor;
 
