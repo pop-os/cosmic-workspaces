@@ -97,24 +97,24 @@ WorkspaceOverride = {
 
         const layoutManager = new Workspace.WorkspaceLayout(metaWorkspace, monitorIndex,
             overviewAdjustment);
-        
-        
+
         // Window previews
 
         //if dock and workspace picker are on the same size translate by dock height
         const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
         translate_x = 0;
-        if (cosmicDock
-            && cosmicDock.stateObj.dockManager.mainDock.get_height() > cosmicDock.stateObj.dockManager.mainDock.get_y()) {
 
-            mainDock = cosmicDock.stateObj.dockManager.mainDock;
-            let dock_left = mainDock.get_x() <= 0
-            let picker_left = global.vertical_overview.workspace_picker_left;
+        if (cosmicDock && cosmicDock.stateObj) {
+            const mainDock = cosmicDock.stateObj.dockManager.mainDock
+            if (mainDock.get_height() > mainDock.get_y()) {
+                const dock_left = mainDock.get_x() <= 0
+                const picker_left = global.vertical_overview.workspace_picker_left;
 
-            if (dock_left && picker_left) {
-                translate_x = mainDock.get_width()
-            } else if (!dock_left && !picker_left) {
-                translate_x = -1 * mainDock.get_width()
+                if (dock_left && picker_left)  {
+                    translate_x = mainDock.get_width()
+                } else if (!dock_left && !picker_left) {
+                    translate_x = -1 * mainDock.get_width()
+                }
             }
         }
 
