@@ -59,6 +59,25 @@ var ControlsManagerLayoutOverride = {
         const { spacing } = this;
         const { expandFraction } = this._workspacesThumbnails;
 
+        //if dock and workspace picker are on the same side translate by dock width
+        translate_x = spacing;
+        const cosmicDock = _Util.getDock();
+        if (cosmicDock) {
+            const mainDock = cosmicDock.stateObj.dockManager.mainDock
+            if (mainDock.get_height() > mainDock.get_y()) {
+                const dock_left = mainDock.get_x() <= 0
+                const picker_left = global.vertical_overview.workspace_picker_left;
+
+                if (dock_left && picker_left)  {
+                    translate_x += mainDock.get_width()
+                } else if (!dock_left && !picker_left) {
+                    translate_x -= (mainDock.get_width() + spacing)
+                } else if (dock_left && !picker_left) {
+                    translate_x = 0;
+                }
+            }
+        }
+
         switch (state) {
         case ControlsState.HIDDEN:
                 if (global.vertical_overview.misc_dTPLeftRightFix) {
@@ -74,7 +93,7 @@ var ControlsManagerLayoutOverride = {
         case ControlsState.WINDOW_PICKER:
         case ControlsState.APP_GRID:
             workspaceBox.set_origin(
-                leftOffset + spacing,
+                leftOffset + translate_x,
                 startY + searchHeight + spacing * expandFraction);
             workspaceBox.set_size(
                 width - leftOffset - rightOffset - (spacing * 2),
@@ -175,8 +194,8 @@ var ControlsManagerLayoutOverride = {
                 size = [rightOffset, height];
             }
 
-            const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
-            if (cosmicDock && cosmicDock.state === ExtensionState.ENABLED) {
+            const cosmicDock = _Util.getDock();
+            if (cosmicDock) {
                 const mainDock = cosmicDock.stateObj.dockManager.mainDock;
 
                 const [, dashHeight] = mainDock.get_preferred_height(width);

@@ -1,3 +1,4 @@
+const Main = imports.ui.main;
 const Gi = imports._gi;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
@@ -58,6 +59,17 @@ function bindSetting(label, callback, executeOnBind = true) {
 
     if (executeOnBind) callback(settings.object, label);
     return signal;
+}
+
+// returns a cosmic dock object if safe to use else undefined
+function getDock() {
+    const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
+    if (cosmicDock
+        && cosmicDock.stateObj
+        && cosmicDock.stateObj.dockManager.mainDock
+        && cosmicDock.state === ExtensionUtils.ExtensionState.ENABLED) {
+        return cosmicDock;
+    }
 }
 
 function unbindSetting(label, callback) {
