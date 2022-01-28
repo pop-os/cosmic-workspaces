@@ -64,10 +64,9 @@ var ControlsManagerLayoutOverride = {
         const cosmicDock = _Util.getDock();
         if (cosmicDock) {
             const mainDock = cosmicDock.stateObj.dockManager.mainDock
+            const picker_left = global.vertical_overview.workspace_picker_left;
             if (mainDock.get_height() > mainDock.get_y()) {
                 const dock_left = mainDock.get_x() <= 0
-                const picker_left = global.vertical_overview.workspace_picker_left;
-
                 if (dock_left && picker_left)  {
                     translate_x += mainDock.get_width()
                 } else if (!dock_left && !picker_left) {
@@ -75,6 +74,8 @@ var ControlsManagerLayoutOverride = {
                 } else if (dock_left && !picker_left) {
                     translate_x = 0;
                 }
+            } else if (!picker_left) {
+                translate_x = 0;
             }
         }
 
