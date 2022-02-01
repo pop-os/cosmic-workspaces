@@ -140,8 +140,8 @@ var SecondaryMonitorDisplayOverride = {
                 size = [rightOffset, height];
             }
 
-            const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
-            if (cosmicDock && cosmicDock.state === ExtensionState.ENABLED) {
+            const cosmicDock = Util.getDock();
+            if (cosmicDock) {
                 const mainDock = cosmicDock.stateObj.dockManager.mainDock;
 
                 const [, dashHeight] = mainDock.get_preferred_height(width);
