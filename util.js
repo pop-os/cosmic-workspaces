@@ -66,6 +66,7 @@ function getDock() {
     const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
     if (cosmicDock
         && cosmicDock.stateObj
+        && cosmicDock.stateObj.dockManager
         && cosmicDock.stateObj.dockManager.mainDock
         && cosmicDock.state === ExtensionUtils.ExtensionState.ENABLED) {
         return cosmicDock;
