@@ -86,6 +86,14 @@ function bindSettings() {
         controlsManager.layoutManager.rightOffset = settings.get_int(label);
     });
 
+    Util.bindSetting('custom-dock-width', (settings, label) => {
+        global.vertical_overview.customDockWidth = settings.get_int(label);
+    });
+
+    Util.bindSetting('custom-dock-height', (settings, label) => {
+        global.vertical_overview.customDockHeight = settings.get_int(label);
+    });
+
     Util.bindSetting('scaling-workspace-background', (settings, label) => {
         if (settings.get_boolean(label)) {
             WorkspaceOverrides.scalingWorkspaceBackgroundOverride();

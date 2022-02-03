@@ -77,6 +77,8 @@ var ControlsManagerLayoutOverride = {
             } else if (!picker_left) {
                 translate_x = 0;
             }
+        } else {
+            translate_x = ((global.vertical_overview.customDockWidth / 100) * Main.layoutManager.primaryMonitor.width)
         }
 
         switch (state) {
@@ -195,21 +197,7 @@ var ControlsManagerLayoutOverride = {
                 size = [rightOffset, height];
             }
 
-            const cosmicDock = _Util.getDock();
-            if (cosmicDock) {
-                const mainDock = cosmicDock.stateObj.dockManager.mainDock;
-
-                const [, dashHeight] = mainDock.get_preferred_height(width);
-                const [, dashWidth] = mainDock.get_preferred_width(height);
-
-                if (mainDock.position == St.Side.BOTTOM) {
-                    size[1] -= dashHeight;
-                } else if (mainDock.position == St.Side.LEFT && global.vertical_overview.workspace_picker_left) {
-                    origin[0] += dashWidth;
-                } else if (mainDock.position == St.Side.RIGHT && !global.vertical_overview.workspace_picker_left) {
-                    origin[0] -= dashWidth;
-                }
-            }
+            _Util.adjustForDock(origin, size, width, height);
 
             childBox.set_origin(...origin);
             childBox.set_size(...size);

@@ -140,21 +140,7 @@ var SecondaryMonitorDisplayOverride = {
                 size = [rightOffset, height];
             }
 
-            const cosmicDock = Util.getDock();
-            if (cosmicDock) {
-                const mainDock = cosmicDock.stateObj.dockManager.mainDock;
-
-                const [, dashHeight] = mainDock.get_preferred_height(width);
-                const [, dashWidth] = mainDock.get_preferred_width(height);
-
-                if (mainDock.position == St.Side.BOTTOM) {
-                    size[1] -= dashHeight;
-                } else if (mainDock.position == St.Side.LEFT && global.vertical_overview.workspace_picker_left) {
-                    origin[0] += dashWidth;
-                } else if (mainDock.position == St.Side.RIGHT && !global.vertical_overview.workspace_picker_left) {
-                    origin[0] -= dashWidth;
-                }
-            }
+            Util.adjustForDock(origin, size, width, height);
 
             childBox.set_origin(...origin);
             childBox.set_size(...size);

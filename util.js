@@ -1,4 +1,5 @@
 const Main = imports.ui.main;
+const { St } = imports.gi;
 const Gi = imports._gi;
 const Gio = imports.gi.Gio;
 const GioSSS = Gio.SettingsSchemaSource;
@@ -70,6 +71,27 @@ function getDock() {
         && cosmicDock.stateObj.dockManager.mainDock
         && cosmicDock.state === ExtensionUtils.ExtensionState.ENABLED) {
         return cosmicDock;
+    }
+}
+
+function adjustForDock(origin, size, width, height) {
+    const cosmicDock = getDock();
+    if (cosmicDock) {
+        const mainDock = cosmicDock.stateObj.dockManager.mainDock;
+
+        const [, dashHeight] = mainDock.get_preferred_height(width);
+        const [, dashWidth] = mainDock.get_preferred_width(height);
+
+        if (mainDock.position == St.Side.BOTTOM) {
+            size[1] -= dashHeight;
+        } else if (mainDock.position == St.Side.LEFT && global.vertical_overview.workspace_picker_left) {
+            origin[0] += dashWidth;
+        } else if (mainDock.position == St.Side.RIGHT && !global.vertical_overview.workspace_picker_left) {
+            origin[0] -= dashWidth;
+        }
+    } else {
+        size[1] += ((global.vertical_overview.customDockHeight / 100) * Main.layoutManager.primaryMonitor.height);
+        origin[0] += ((global.vertical_overview.customDockWidth / 100) * Main.layoutManager.primaryMonitor.width);
     }
 }
 

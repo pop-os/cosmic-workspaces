@@ -18,6 +18,28 @@
             </summary>
             <description></description>
         </key>
+        <key type="i" name="custom-dock-width">
+            <default>0</default>
+            <range min="-100" max="100" />
+            <summary>
+                A manual width offset for the workspaces picker.
+                Use this value if using a dock extension that is not cosmic-dock.
+                This value is ignored unless the cosmic-dock extension is disabled.
+                Value is a percentage of the screen. Negative values are allowed.
+            </summary>
+            <description></description>
+        </key>
+        <key type="i" name="custom-dock-height">
+            <default>0</default>
+            <range min="-100" max="100" />
+            <summary>
+                A manual height offset for the workspaces picker.
+                Use this value if using a dock extension that is not cosmic-dock.
+                This value is ignored unless the cosmic-dock extension is disabled.
+                Value is a percentage of the screen. Negative values are allowed.
+            </summary>
+            <description></description>
+        </key>
         <key type="i" name="thumbnails-position">
             <default>0</default>
             <summary>position of thumbnails in percentage</summary>
