@@ -78,7 +78,7 @@ var ControlsManagerLayoutOverride = {
                 translate_x = 0;
             }
         } else {
-            translate_x = ((global.vertical_overview.customDockWidth / 100) * Main.layoutManager.primaryMonitor.width)
+            translate_x += ((global.vertical_overview.customDockWidth / 100) * Main.layoutManager.primaryMonitor.width)
         }
 
         switch (state) {
