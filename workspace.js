@@ -28,7 +28,7 @@ function staticBackgroundOverride() {
             let bgManager = new Background.BackgroundManager({
                 monitorIndex: monitor.index,
                 container: Main.layoutManager.overviewGroup,
-                vignette: false,
+                vignette: true,
             });
 
             bgManager._fadeSignal = Main.overview._overview._controls._stateAdjustment.connect('notify::value', (v) => {
