@@ -20,45 +20,44 @@ const Self = imports.misc.extensionUtils.getCurrentExtension();
 const _Util = Self.imports.util;
 const animateAllocation = imports.ui.workspace.animateAllocation;
 
-function updateStaticBackgrounds() {
-    for (var bg of global.vertical_overview.bgManagers) {
-        bg.destroy();
-    }
-
-    for (var monitor of Main.layoutManager.monitors) {
-        let bgManager = new Background.BackgroundManager({
-            monitorIndex: monitor.index,
-            container: Main.layoutManager.overviewGroup,
-        });
-
-        global.vertical_overview.bgManagers.push(bgManager);
-    }
-}
-
 var staticBackgroundEnabled = false;
-var monitorsChangedId = null;
 function staticBackgroundOverride() {
     if (!staticBackgroundEnabled) {
         global.vertical_overview.bgManagers = [];
-        monitorsChangedId = Main.layoutManager.connect('monitors-changed', () => {
-            updateStaticBackgrounds();
-        });
-        updateStaticBackgrounds();
+        for (var monitor of Main.layoutManager.monitors) {
+            let bgManager = new Background.BackgroundManager({
+                monitorIndex: monitor.index,
+                container: Main.layoutManager.overviewGroup,
+                vignette: true,
+            });
 
+            bgManager._fadeSignal = Main.overview._overview._controls._stateAdjustment.connect('notify::value', (v) => {
+                bgManager.backgroundActor.content.vignette_sharpness = Util.lerp(0, 0.6, Math.min(v.value, 1));
+                bgManager.backgroundActor.content.brightness = Util.lerp(1, 0.75, Math.min(v.value, 1));
+            });
+
+            global.vertical_overview.bgManagers.push(bgManager);
+        }
         staticBackgroundEnabled = true;
     }
 }
 
 function staticBackgroundReset() {
     if (staticBackgroundEnabled) {
-        Main.layoutManager.disconnect(monitorsChangedId);
-        monitorsChangedId = null;
-
         for (var bg of global.vertical_overview.bgManagers) {
+            Main.overview._overview._controls._stateAdjustment.disconnect(bg._fadeSignal);
             bg.destroy();
         }
         delete global.vertical_overview.bgManagers;
         staticBackgroundEnabled = false;
+    }
+}
+
+var scalingWorkspaceBackgroundEnabled = false;
+function scalingWorkspaceBackgroundOverride() {
+    if (!scalingWorkspaceBackgroundEnabled) {
+        global.vertical_overview.GSFunctions['Workspace'] = _Util.overrideProto(Workspace.Workspace.prototype, WorkspaceOverride);
+        scalingWorkspaceBackgroundEnabled = true;
     }
 }
 
