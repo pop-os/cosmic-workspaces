@@ -21,6 +21,10 @@ const _Util = Self.imports.util;
 const animateAllocation = imports.ui.workspace.animateAllocation;
 
 function updateStaticBackgrounds() {
+    for (var bg of global.vertical_overview.bgManagers) {
+        bg.destroy();
+    }
+
     for (var monitor of Main.layoutManager.monitors) {
         let bgManager = new Background.BackgroundManager({
             monitorIndex: monitor.index,
