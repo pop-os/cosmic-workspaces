@@ -25,6 +25,8 @@ function updateStaticBackgrounds() {
         bg.destroy();
     }
 
+    global.vertical_overview.bgManagers = [];
+
     for (var monitor of Main.layoutManager.monitors) {
         let bgManager = new Background.BackgroundManager({
             monitorIndex: monitor.index,
@@ -33,6 +35,9 @@ function updateStaticBackgrounds() {
 
         global.vertical_overview.bgManagers.push(bgManager);
     }
+
+    staticBackgroundEnabled = true;
+    scalingWorkspaceBackgroundEnabled = true;
 }
 
 var staticBackgroundEnabled = false;
