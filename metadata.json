@@ -4,7 +4,8 @@
     "original-author": "rens.althuis@gmail.com",
     "shell-version" : [
         "40",
-        "41"
+        "41",
+        "42"
     ],
     "url" : "",
     "uuid" : "cosmic-workspaces@system76.com",
