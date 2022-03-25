@@ -154,7 +154,7 @@ var ThumbnailsBoxOverride = {
         if (this._thumbnails.length == 0) // not visible
             return;
 
-        let themeNode = this.get_theme_node();
+        const themeNode = this.get_theme_node();
         box = themeNode.get_content_box(parentBox);
 
         const portholeWidth = this._porthole.width;
@@ -198,6 +198,10 @@ var ThumbnailsBoxOverride = {
         vScale *= additionalScale;
         hScale *= additionalScale;
         this.set_allocation(parentBox);
+        
+        if (this._monitorIndex == Main.layoutManager.primaryIndex) {
+            global.vertical_overview.primaryThumbnailWidth = width - spacing;
+        }
 
         box.x2 = box.x1 + width;
 
