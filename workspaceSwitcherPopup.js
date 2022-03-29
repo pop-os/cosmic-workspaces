@@ -18,6 +18,7 @@ function reset() {
 
 var WorkspaceSwitcherPopupOverride = {
     _redisplay: function() {
+        // Move OSD to the side of the screen coresponding to the workspace picker location
         this._list.set_vertical(true);
         if (global.vertical_overview.workspace_picker_left) {
             this.set_x_align(Clutter.ActorAlign.START);
@@ -26,8 +27,24 @@ var WorkspaceSwitcherPopupOverride = {
         }
         this.set_y_align(Clutter.ActorAlign.CENTER);
 
-        let workspaceManager = global.workspace_manager;
+        // translate x by dock width if picker and dock are on the same side
+        const cosmicDock = Util.getDock();
+        if (cosmicDock) {
+            const mainDock = cosmicDock.stateObj.dockManager.mainDock
+            const picker_left = global.vertical_overview.workspace_picker_left;
+            const dashWidth = mainDock.width;
 
+            if (mainDock.get_height() > mainDock.get_y()) {
+                const dock_left = mainDock.get_x() <= 0
+                if (dock_left && picker_left)  {
+                    this.set_translation(dashWidth,0,0);
+                } else if (!dock_left && !picker_left) {
+                    this.set_translation(-dashWidth,0,0);
+                }
+            }
+        }
+
+        let workspaceManager = global.workspace_manager;
         this._list.destroy_all_children();
 
         for (let i = 0; i < workspaceManager.n_workspaces; i++) {
