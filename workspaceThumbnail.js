@@ -151,6 +151,18 @@ var ThumbnailsBoxOverride = {
         box.y2 -= 32;
         let parentBox = box;
 
+        var width;
+        if (this._monitorIndex == Main.layoutManager.primaryIndex) {
+            global.vertical_overview.workspacePickerX1 = box.x1;
+            global.vertical_overview.workspacePickerWidth = box.get_width();
+            width = box.get_width();
+        } else {
+            const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
+            const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
+            box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor
+            width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
+        }
+
         if (this._thumbnails.length == 0) // not visible
             return;
 
@@ -193,15 +205,12 @@ var ThumbnailsBoxOverride = {
         let additionalScale = (box.get_height() < totalHeight) ?  box.get_height() / totalHeight : 1;
         height *= additionalScale;
         width *= additionalScale;
-        parentBox.set_size(width + spacing*2, parentBox.get_height())
         spacing *= additionalScale;
         vScale *= additionalScale;
         hScale *= additionalScale;
+
+        parentBox.set_size(width + spacing*2, parentBox.get_height())
         this.set_allocation(parentBox);
-        
-        if (this._monitorIndex == Main.layoutManager.primaryIndex) {
-            global.vertical_overview.primaryThumbnailWidth = width - spacing;
-        }
 
         box.x2 = box.x1 + width;
 
@@ -226,7 +235,7 @@ var ThumbnailsBoxOverride = {
                 y1 += placeholderHeight + spacing;
             }
 
-            childBox.set_origin(box.x1 + (box.get_width() - width)/2, y1);
+            childBox.set_origin(spacing, y1);
             childBox.set_size(width, height);
             thumbnail.setScale(vScale, hScale);
             thumbnail.allocate(childBox);
@@ -247,8 +256,8 @@ var ThumbnailsBoxOverride = {
         let indicatorLeftFullBorder = indicatorThemeNode.get_padding(St.Side.LEFT) + indicatorThemeNode.get_border_width(St.Side.LEFT);
         let indicatorRightFullBorder = indicatorThemeNode.get_padding(St.Side.RIGHT) + indicatorThemeNode.get_border_width(St.Side.RIGHT);
 
-        childBox.x1 = box.x1 + (box.get_width() - width)/2;
-        childBox.x2 = box.x1 + (box.get_width() + width)/2;
+        childBox.x1 = spacing;
+        childBox.x2 = spacing + (box.get_width() + width)/2;
 
         const indicatorY1 = indicatorLowerY1 +
             (indicatorUpperY1 - indicatorLowerY1) * (indicatorValue % 1);
