@@ -61,26 +61,6 @@ var ControlsManagerLayoutOverride = {
         const { spacing } = this;
         const { expandFraction } = this._workspacesThumbnails;
 
-        //if dock and workspace picker are on the same side translate by dock width
-        translate_x = spacing;
-        const cosmicDock = _Util.getDock();
-        if (cosmicDock) {
-            const mainDock = cosmicDock.stateObj.dockManager.mainDock
-            const picker_left = global.vertical_overview.workspace_picker_left;
-            if (mainDock.get_height() > mainDock.get_y()) {
-                const dock_left = mainDock.get_x() <= 0
-                if (dock_left && picker_left)  {
-                    translate_x += mainDock.get_width()
-                } else if (!dock_left && !picker_left) {
-                    translate_x -= (mainDock.get_width() + spacing)
-                } else if (dock_left && !picker_left) {
-                    translate_x = 0;
-                }
-            } else if (!picker_left) {
-                translate_x = 0;
-            }
-        }
-
         switch (state) {
         case ControlsState.HIDDEN:
                 if (global.vertical_overview.misc_dTPLeftRightFix) {
@@ -95,11 +75,15 @@ var ControlsManagerLayoutOverride = {
             break;
         case ControlsState.WINDOW_PICKER:
         case ControlsState.APP_GRID:
+            const newWidth = width - this.leftOffset - this.rightOffset - (spacing * 2);
+            const newXOrigin = global.vertical_overview.workspace_picker_left
+                ? this._workspacesThumbnails.x + this._workspacesThumbnails.width + spacing * 2
+                : this._workspacesThumbnails.x - newWidth - spacing * 2;
             workspaceBox.set_origin(
-                this.leftOffset + translate_x,
+                newXOrigin,
                 startY + searchHeight + spacing * expandFraction);
             workspaceBox.set_size(
-                width - this.leftOffset - this.rightOffset - (spacing * 2),
+                newWidth,
                 height - startY - (searchHeight + spacing * expandFraction) * 2);
             break;
         }

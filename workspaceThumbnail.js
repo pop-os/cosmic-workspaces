@@ -158,7 +158,7 @@ var ThumbnailsBoxOverride = {
             global.vertical_overview.workspacePickerWidth = box.get_width();
             width = box.get_width();
         } else {
-            box.x1 = global.vertical_overview.workspacePickerX1 * scale * scaleFactor;
+            box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
         }
 
