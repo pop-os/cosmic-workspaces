@@ -149,23 +149,23 @@ var ThumbnailsBoxOverride = {
         //set top and bottom margin
         box.y1 += 16;
         box.y2 -= 32;
-        let parentBox = box;
 
         var width;
+        const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
+        const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
         if (this._monitorIndex == Main.layoutManager.primaryIndex) {
             global.vertical_overview.workspacePickerX1 = box.x1;
             global.vertical_overview.workspacePickerWidth = box.get_width();
             width = box.get_width();
         } else {
-            const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
-            const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
-            box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor
+            box.x1 = global.vertical_overview.workspacePickerX1 * scale * scaleFactor;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
         }
 
         if (this._thumbnails.length == 0) // not visible
             return;
 
+        let parentBox = box;
         const themeNode = this.get_theme_node();
         box = themeNode.get_content_box(parentBox);
 
@@ -173,7 +173,6 @@ var ThumbnailsBoxOverride = {
         const portholeHeight = this._porthole.height;
         const ratio = portholeHeight / portholeWidth;
 
-        var width = box.get_width();
         var height = Math.round(width * ratio);
 
         let vScale = width / portholeWidth;
@@ -208,6 +207,12 @@ var ThumbnailsBoxOverride = {
         spacing *= additionalScale;
         vScale *= additionalScale;
         hScale *= additionalScale;
+
+        if (!global.vertical_overview.workspace_picker_left) {
+            const gap = 16 * scaleFactor;
+            const total_spacing = spacing * 2;
+            parentBox.x1 = portholeWidth - width - gap - total_spacing;
+        }
 
         parentBox.set_size(width + spacing*2, parentBox.get_height())
         this.set_allocation(parentBox);
