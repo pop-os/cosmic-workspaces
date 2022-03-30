@@ -146,6 +146,10 @@ var ThumbnailsBoxOverride = {
     },
 
     vfunc_allocate: function(box) {
+
+        if (this._thumbnails.length == 0) // not visible
+            return;
+
         //set top and bottom margin
         box.y1 += 16;
         box.y2 -= 32;
@@ -161,9 +165,6 @@ var ThumbnailsBoxOverride = {
             box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
         }
-
-        if (this._thumbnails.length == 0) // not visible
-            return;
 
         let parentBox = box;
         const themeNode = this.get_theme_node();
@@ -209,9 +210,13 @@ var ThumbnailsBoxOverride = {
         hScale *= additionalScale;
 
         if (!global.vertical_overview.workspace_picker_left) {
-            const gap = 16 * scaleFactor;
             const total_spacing = spacing * 2;
-            parentBox.x1 = portholeWidth - width - gap - total_spacing;
+            if (this._monitorIndex == Main.layoutManager.primaryIndex) {
+                parentBox.x1 -= total_spacing;
+            } else {
+                const gap = 16 * scaleFactor;
+                parentBox.x1 = portholeWidth - width - gap - total_spacing;
+            }
         }
 
         parentBox.set_size(width + spacing*2, parentBox.get_height())
