@@ -32,7 +32,7 @@ var WorkspaceSwitcherPopupOverride = {
         if (cosmicDock) {
             const mainDock = cosmicDock.stateObj.dockManager.mainDock
             const picker_left = global.vertical_overview.workspace_picker_left;
-            const dashWidth = mainDock.width;
+            const dashWidth = mainDock._slider.get_child().get_width();
 
             if (mainDock.get_height() > mainDock.get_y()) {
                 const dock_left = mainDock.get_x() <= 0
