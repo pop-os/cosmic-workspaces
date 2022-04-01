@@ -60,6 +60,7 @@ var ControlsManagerLayoutOverride = {
 
         const { spacing } = this;
         const { expandFraction } = this._workspacesThumbnails;
+        const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
 
         switch (state) {
         case ControlsState.HIDDEN:
@@ -75,7 +76,7 @@ var ControlsManagerLayoutOverride = {
             break;
         case ControlsState.WINDOW_PICKER:
         case ControlsState.APP_GRID:
-            const newWidth = width - this.leftOffset - this.rightOffset - (spacing * 2);
+            const newWidth = width - this._workspacesThumbnails.width * ( scaleFactor > 1 ? scaleFactor : 2);
             const newXOrigin = global.vertical_overview.workspace_picker_left
                 ? this._workspacesThumbnails.x + this._workspacesThumbnails.width + spacing * 2
                 : this._workspacesThumbnails.x - newWidth - spacing * 2;
