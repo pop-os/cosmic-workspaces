@@ -159,7 +159,7 @@ var ThumbnailsBoxOverride = {
         const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
         if (this._monitorIndex == Main.layoutManager.primaryIndex) {
             global.vertical_overview.workspacePickerX1 = box.x1;
-            global.vertical_overview.workspacePickerWidth = box.get_width();
+            global.vertical_overview.workspacePickerWidth = box.get_width() / scaleFactor;
             width = box.get_width();
         } else {
             box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
