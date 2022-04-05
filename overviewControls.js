@@ -141,12 +141,8 @@ var ControlsManagerLayoutOverride = {
         let availableHeight = height;
 
         // Search entry
-        let [searchHeight] = this._searchEntry.get_preferred_height(width);
-        childBox.set_origin(leftOffset, startY);
-        childBox.set_size(width - leftOffset - rightOffset, searchHeight);
-        this._searchEntry.allocate(childBox);
-
-        availableHeight -= searchHeight + spacing;
+        const searchHeight = 0;
+        availableHeight -= spacing;
 
         // Dash
         if (global.vertical_overview.dash_override) {
