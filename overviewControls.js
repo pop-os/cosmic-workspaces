@@ -313,8 +313,6 @@ var ControlsManagerOverride = {
 
         this._searchController.prepareToEnterOverview();
         this._workspacesDisplay.prepareToEnterOverview();
-        if (!this._workspacesDisplay.activeWorkspaceHasMaximizedWindows())
-            Main.overview.fadeOutDesktop();
 
         this._stateAdjustment.value = ControlsState.HIDDEN;
 
