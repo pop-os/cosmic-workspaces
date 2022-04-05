@@ -157,6 +157,17 @@ var ThumbnailsBoxOverride = {
         var width;
         const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
         const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
+
+        var mainDockWidth;
+        var mainDockPosition;
+        const cosmicDock = Util.getDock();
+        if (cosmicDock) {
+            global.log("monitor test");
+            const mainDock = cosmicDock.stateObj.dockManager.mainDock;
+            mainDockPosition = mainDock.position;
+            [, mainDockWidth] = mainDock.get_preferred_width(height);
+        }
+
         if (this._monitorIndex == Main.layoutManager.primaryIndex) {
             global.vertical_overview.workspacePickerX1 = box.x1;
             global.vertical_overview.workspacePickerWidth = box.get_width() / scaleFactor;
@@ -164,6 +175,10 @@ var ThumbnailsBoxOverride = {
         } else {
             box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
+
+            if (mainDockPosition == St.Side.LEFT) {
+                box.x1 -= mainDockWidth;
+            }
         }
 
         let parentBox = box;
