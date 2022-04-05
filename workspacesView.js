@@ -96,15 +96,21 @@ var SecondaryMonitorDisplayOverride = {
         const { ControlsState } = OverviewControls;
         const workspaceBox = box.copy();
         const [width, height] = workspaceBox.get_size();
+        const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
+
+        const newWidth = width - this._thumbnails.width * ( scaleFactor > 1 ? scaleFactor : 2);
+        const newXOrigin = global.vertical_overview.workspace_picker_left
+              ? this._thumbnails.x + this._thumbnails.width + spacing * 2
+              : this._thumbnails.x - newWidth - spacing * 2;
 
         switch (state) {
             case ControlsState.HIDDEN:
                 break;
             case ControlsState.WINDOW_PICKER:
             case ControlsState.APP_GRID:
-                workspaceBox.set_origin(leftOffset, padding + spacing);
+                workspaceBox.set_origin(newXOrigin, padding + spacing);
                 workspaceBox.set_size(
-                    width - rightOffset - leftOffset,
+                    newWidth,
                     height - 2 * padding - spacing);
                 break;
         }
