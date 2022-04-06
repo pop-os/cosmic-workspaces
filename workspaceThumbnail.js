@@ -158,12 +158,15 @@ var ThumbnailsBoxOverride = {
         const { scaleFactor } = St.ThemeContext.get_for_stage(global.stage);
         const scale = Math.max(1, Main.layoutManager.getWorkAreaForMonitor(this._monitorIndex).width / Main.layoutManager.primaryMonitor.width);
 
+        var mainDockHides;
         var mainDockWidth;
         var mainDockPosition;
         const cosmicDock = Util.getDock();
         if (cosmicDock) {
             global.log("monitor test");
             const mainDock = cosmicDock.stateObj.dockManager.mainDock;
+            const dockSettings = cosmicDock.stateObj.dockManager.settings;
+            mainDockHides = dockSettings.intellihideMode || dockSettings.dockFixed || !dockSettings.multiMonitor
             mainDockPosition = mainDock.position;
             [, mainDockWidth] = mainDock.get_preferred_width(height);
         }
@@ -176,7 +179,7 @@ var ThumbnailsBoxOverride = {
             box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
 
-            if (mainDockPosition == St.Side.LEFT) {
+            if (mainDockPosition == St.Side.LEFT && mainDockHides) {
                 box.x1 -= mainDockWidth;
             }
         }
@@ -231,6 +234,9 @@ var ThumbnailsBoxOverride = {
             } else {
                 const gap = 16 * scaleFactor;
                 parentBox.x1 = portholeWidth - width - gap - total_spacing;
+                if (mainDockPosition == St.Side.RIGHT && !mainDockHides) {
+                    parentBox.x1 -= mainDockWidth;
+                }
             }
         }
 
