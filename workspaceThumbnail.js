@@ -160,15 +160,16 @@ var ThumbnailsBoxOverride = {
 
         var mainDockHides;
         var mainDockWidth;
+        var mainDockHeight;
         var mainDockPosition;
         const cosmicDock = Util.getDock();
         if (cosmicDock) {
-            global.log("monitor test");
             const mainDock = cosmicDock.stateObj.dockManager.mainDock;
             const dockSettings = cosmicDock.stateObj.dockManager.settings;
-            mainDockHides = dockSettings.intellihideMode || dockSettings.dockFixed || !dockSettings.multiMonitor
+            mainDockHides = dockSettings.intellihideMode || dockSettings.dockFixed || !dockSettings.multiMonitor;
             mainDockPosition = mainDock.position;
             [, mainDockWidth] = mainDock.get_preferred_width(height);
+            [, mainDockHeight] = mainDock.get_preferred_height(width);
         }
 
         if (this._monitorIndex == Main.layoutManager.primaryIndex) {
@@ -181,6 +182,9 @@ var ThumbnailsBoxOverride = {
 
             if (mainDockPosition == St.Side.LEFT && mainDockHides) {
                 box.x1 -= mainDockWidth;
+            } else if (mainDockPosition == St.Side.BOTTOM && !mainDockHides) {
+                global.log("box height = " + mainDockHeight);
+                box.set_size(box.get_width(), box.get_height() - mainDockHeight);
             }
         }
 
