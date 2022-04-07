@@ -177,7 +177,7 @@ var ThumbnailsBoxOverride = {
             global.vertical_overview.workspacePickerWidth = box.get_width() / scaleFactor;
             width = box.get_width();
         } else {
-            box.x1 = global.vertical_overview.workspacePickerX1 * scaleFactor;
+            box.x1 = global.vertical_overview.workspacePickerX1;
             width = global.vertical_overview.workspacePickerWidth * scale * scaleFactor;
 
             if (mainDockPosition == St.Side.LEFT && mainDockHides) {
