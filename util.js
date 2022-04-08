@@ -64,12 +64,9 @@ function bindSetting(label, callback, executeOnBind = true) {
 // returns a cosmic dock object if safe to use else undefined
 function getDock() {
     const cosmicDock = Main.extensionManager.lookup("cosmic-dock@system76.com");
-    if (cosmicDock
-        && cosmicDock.stateObj
-        && cosmicDock.stateObj.dockManager.mainDock
-        && cosmicDock.state === ExtensionUtils.ExtensionState.ENABLED) {
+    if (cosmicDock?.stateObj?.dockManager?.mainDock
+        && cosmicDock.state === ExtensionUtils.ExtensionState.ENABLED)
         return cosmicDock;
-    }
 }
 
 function unbindSetting(label, callback) {
