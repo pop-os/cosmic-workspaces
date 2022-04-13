@@ -159,16 +159,14 @@ WorkspaceOverride = {
         }
 
         // Track window changes, but let the window tracker process them first
-        if (this.metaWorkspace) {
-            this._windowAddedId = this.metaWorkspace.connect_after(
-                'window-added', this._windowAdded.bind(this));
-            this._windowRemovedId = this.metaWorkspace.connect_after(
-                'window-removed', this._windowRemoved.bind(this));
-        }
-        this._windowEnteredMonitorId = global.display.connect_after(
-            'window-entered-monitor', this._windowEnteredMonitor.bind(this));
-        this._windowLeftMonitorId = global.display.connect_after(
-            'window-left-monitor', this._windowLeftMonitor.bind(this));
+        this.metaWorkspace?.connectObject(
+            'window-added', this._windowAdded.bind(this), GObject.ConnectFlags.AFTER,
+            'window-removed', this._windowRemoved.bind(this), GObject.ConnectFlags.AFTER,
+            'notify::active', () => layoutManager.syncOverlays(), this);
+        global.display.connectObject(
+            'window-entered-monitor', this._windowEnteredMonitor.bind(this), GObject.ConnectFlags.AFTER,
+            'window-left-monitor', this._windowLeftMonitor.bind(this), GObject.ConnectFlags.AFTER,
+            this);
         this._layoutFrozenId = 0;
 
         // DND requires this to be set
