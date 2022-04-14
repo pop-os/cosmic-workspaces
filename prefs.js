@@ -3,7 +3,7 @@ const Gio = imports.gi.Gio;
 const Gtk = imports.gi.Gtk;
 
 function open_panel() {
-    const appinfo = Gio.DesktopAppInfo.new("gnome-background-panel-workspaces.desktop");
+    const appinfo = Gio.DesktopAppInfo.new("gnome-desktop-workspaces-panel.desktop");
     const launch_ctx = Gdk.Display.get_default().get_app_launch_context();
     appinfo.launch([], launch_ctx);
 }
