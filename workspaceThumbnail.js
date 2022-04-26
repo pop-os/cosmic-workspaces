@@ -183,7 +183,6 @@ var ThumbnailsBoxOverride = {
             if (mainDockPosition == St.Side.LEFT && mainDockHides) {
                 box.x1 -= mainDockWidth;
             } else if (mainDockPosition == St.Side.BOTTOM && !mainDockHides) {
-                global.log("box height = " + mainDockHeight);
                 box.set_size(box.get_width(), box.get_height() - mainDockHeight);
             }
         }
@@ -233,14 +232,14 @@ var ThumbnailsBoxOverride = {
 
         if (!global.vertical_overview.workspace_picker_left) {
             const total_spacing = spacing * 2;
-            if (this._monitorIndex == Main.layoutManager.primaryIndex) {
-                parentBox.x1 -= total_spacing;
-            } else {
-                const gap = 16 * scaleFactor;
-                parentBox.x1 = portholeWidth - width - gap - total_spacing;
-                if (mainDockPosition == St.Side.RIGHT && !mainDockHides) {
-                    parentBox.x1 -= mainDockWidth;
-                }
+            const gap = 16 * scaleFactor;
+            parentBox.x1 = portholeWidth - width - gap - total_spacing;
+            if (mainDockPosition == St.Side.RIGHT && !mainDockHides) {
+                parentBox.x1 -= mainDockWidth;
+            } else if (this._monitorIndex == Main.layoutManager.primaryIndex
+                       && mainDockPosition == St.Side.LEFT
+                       && mainDockHides) {
+                parentBox.x1 += mainDockWidth;
             }
         }
 
