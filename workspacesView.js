@@ -54,10 +54,14 @@ var WorkspacesViewOverride = {
     _getSpacing(box, fitMode, vertical) {
         const [width, height] = box.get_size();
         const [workspace] = this._workspaces;
-        var [, workspaceHeight] = workspace.get_preferred_height(width);
-        if (workspaceHeight > height) {
-            workspaceHeight = height;
+
+        var workspaceHeight = 0
+
+        if (undefined !== workspace) {
+            var [, preferredHeight] = workspace.get_preferred_height(width);
+            workspaceHeight = (preferredHeight > height) ? height : preferredHeight
         }
+
         let total_height = global.screen_height;
         let availableSpace = ((total_height - workspaceHeight) / 2) - (global.vertical_overview.workspacePeek || 0);
         const spacing = (availableSpace) * (1 - fitMode);
@@ -77,9 +81,11 @@ var WorkspacesViewOverride = {
 
         // Single fit mode implies centered too
         let [x1, y1] = box.get_origin();
-        var [, workspaceHeight] = workspace.get_preferred_height(width);
-        if (workspaceHeight > height) {
-            workspaceHeight = height;
+
+        var workspaceHeight = 0
+        if (undefined !== workspace) {
+            var [, preferredHeight] = workspace.get_preferred_height(width);
+            workspaceHeight = (preferredHeight > height) ? height : preferredHeight
         }
 
         y1 += (height - workspaceHeight) / 2;
