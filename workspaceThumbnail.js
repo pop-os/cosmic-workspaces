@@ -216,7 +216,7 @@ var ThumbnailsBoxOverride = {
                 ...this._dropPlaceholder.get_position());
 
             Meta.later_add(Meta.LaterType.BEFORE_REDRAW, () => {
-                this._dropPlaceholder.hide();
+                if (this._dropPlaceholder) this._dropPlaceholder.hide()
             });
         }
 
@@ -261,7 +261,7 @@ var ThumbnailsBoxOverride = {
                 this._dropPlaceholder.allocate(childBox);
 
                 Meta.later_add(Meta.LaterType.BEFORE_REDRAW, () => {
-                    this._dropPlaceholder.show();
+                    if (this._dropPlaceholder) this._dropPlaceholder.show()
                 });
             }
 
